@@ -1,6 +1,6 @@
 # Procedure to upgrade of the certificates of the HAProxy services
 
-##Acessar via ssh ou o servidor 1 ou 3 HAProxy, pois o 2 não tem o Certbot instalado. Após acessar, executar o certbot
+## Acessar via ssh ou o servidor 1 ou 3 HAProxy, pois o 2 não tem o Certbot instalado. Após acessar, executar o certbot
 
 ```bash
 gcloud compute ssh --zone "europe-west3-a" "hetzner-lb-35db8b4e-1" --project "stately-sentry-249714"
