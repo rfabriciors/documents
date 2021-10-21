@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Idade</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/estilo.css') }}">
+</head>
+<body>
+    <header>
+        <h1><center>Verificador de Idade</center></h1>
+    </header>
+    <section>
+        <div>
+            <p>Ano de Nascimento:
+                <input type="number" name="idade" id="idade" min="0"></p>
+                <p>Sexo:
+                    <input type="radio" name="radSex" id="Mas" checked>
+                    <label for="Mas">Masculino</label>
+                    <input type="radio" name="radSex" id="Fem">
+                    <label for="Fem">Feminino</label>
+                </p>
+                <p>
+                    <input type="button" value="Verificar" id="verificar" name="verificar">
+                </p>
+            </div>
+        <div>
+        <div id="divresult" name="divresult">
+            Preencha os dados acima para ver o resultado
+        </div>
+    </section>
+    <footer>
+        <p><center>&copy; Taligent</center></p>
+    </footer>
+    <script src="{{ url_for('static', filename= 'js/script.js') }}"></script>
+</body>
+</html>

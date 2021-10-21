@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sampleapp
+  namespace: sampleapp
+spec:
+  rules:
+  - host: sampleapp.services.dev.klever.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: sampleapp
+            port:
+              number: 8080
+        path: /
+        pathType: ImplementationSpecific

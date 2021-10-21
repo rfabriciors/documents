@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  app.kubernetes.io/name: sampleapp
+resources:
+- deployment.yaml
+images:
+- name: sampleapp
+  newName: gcr.io/tronwallet-dev-266921/sampleapp
+  newTag: ed98a71

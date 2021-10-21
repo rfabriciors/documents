@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: klever
+  labels:
+    app: appidadeklv
+  name: appidadeklv
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: appidadeklv
+  template:
+    metadata:
+      labels:
+        app: appidadeklv
+    spec:
+      containers:
+      - image: rfabricio/appidadeklv:latest
+        name: appidadeklv
+        ports:
+        - containerPort: 5000
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 2
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 2
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 2
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 2          
+        resources: {}
+status: {}

@@ -1,0 +1,13 @@
+---
+- hosts: local
+  become: true
+
+  tasks: 
+  # - name: Apaga antigos deploy se houver
+  #  command: kubectl delete -f ../k8/deployment-appidadeklv.yaml
+  #- name: Apaga antigos service se houver
+  #  command: kubectl delete -f ../k8/service-appidadeklv.yaml
+  - name: Inicia o Deploy
+    command: kubectl --kubeconfig=/home/rfabr/.kube/config apply -f /home/rfabr/klever/k8/deployment-appidadeklv.yaml
+  - name: Inicia service
+    command: kubectl --kubeconfig=/home/rfabr/.kube/config apply -f /home/rfabr/klever/k8/service-appidadeklv.yaml
