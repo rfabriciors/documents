@@ -1,17 +1,27 @@
 # Procedure to upgrade of the certificates of the HAProxy services
 
-### Acessar via ssh ou o servidor 1 ou 3 HAProxy, pois o 2 não tem o Certbot instalado. Após acessar, executar o certbot
+### Access via ssh the HAProxy server 1 or 3, because the server 2 no have Certbot installed.
 
-```bash
+
+```text
+gcloud compute ssh --zone "europe-west3-b" "hetzner-lb-35db8b4e-2" --project "stately-sentry-249714"
+gcloud compute ssh --zone "europe-west3-c" "hetzner-lb-35db8b4e-0" --project "stately-sentry-249714"
 gcloud compute ssh --zone "europe-west3-a" "hetzner-lb-35db8b4e-1" --project "stately-sentry-249714"
 ```
 
+
+```bash
+gcloud compute ssh --zone "europe-west3-c" "hetzner-lb-35db8b4e-0" --project "stately-sentry-249714"
+```
+
 - Can be necessary create rules to allow remote access via SSH protocol. The rules must be created in *hetzner-labs-haproxy-operators*
-https://console.cloud.google.com/networking/firewalls/details/hetzner-labs-haproxy-operators?project=stately-sentry-249714
+
+    https://console.cloud.google.com/networking/firewalls/details/hetzner-labs-haproxy-operators?project=stately-sentry-249714
 
 After access the server, execute the certbot application:
 
 ```bash
+sudo su -
 certbot -d dominio.xxx.klever.io --manual --preferred-challenges dns certonly
 ```
 
@@ -30,6 +40,7 @@ cat /etc/letsencrypt/live/dominio.xxx.klever.io/privkey.pem >> certs/dominio.xxx
 Next, restart the container of the HAProxy
 
 ```bash
+cd /opt/haproxy
 docker-compose down
 docker-compose up -d
 ```
@@ -44,11 +55,11 @@ docker-compose up -d
 ```bash
 #/bin/sh
 
-for a in *.cer
+for certificado in *.pem
 do
-     cert_age=$(($(date -d "$(openssl x509 -noout -text -in $a | grep -i "not after"|awk -F ' : ' '{print $2}')" +%j) - $(date '+%j')))
+     cert_age=$(($(date -d "$(openssl x509 -noout -text -in $certificado | grep -i "not after"|awk -F ' : ' '{print $2}')" +%j) - $(date '+%j')))
     if [ $cert_age -lt 15 ]; then
-         echo "it's going to give shit in certificate" $a
+         echo "O certificado $certificado tem $cert_age de dias restantes"
     fi
 done
  ```
